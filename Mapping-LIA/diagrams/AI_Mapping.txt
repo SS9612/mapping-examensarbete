@@ -1,0 +1,21 @@
+sequenceDiagram
+    participant User
+    participant Controller
+    participant Service
+    participant DB
+
+    User->>Controller: map competence
+    Controller->>Service: map()
+    Service->>DB: save (PendingReview)
+    Service-->>Controller: result
+    Controller-->>User: response
+
+    User->>Controller: get pending
+    Controller->>DB: query PendingReview
+    DB-->>Controller: list
+    Controller-->>User: list
+
+    User->>Controller: approve
+    Controller->>DB: update status
+    DB-->>Controller: ok
+    Controller-->>User: ok

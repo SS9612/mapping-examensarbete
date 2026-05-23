@@ -1,0 +1,29 @@
+﻿sequenceDiagram
+    participant Client
+    participant Controller
+    participant MapOne
+
+    Client->>Controller: POST /api/area-mapper/map-form
+    Note over Controller: Content-Type: multipart/form-data
+    Note over Controller: Form fields: competence (optional), file (optional)
+    
+    Note over Controller: Collect inputs from form field
+    
+    alt File uploaded
+        Note over Controller: Read file line by line
+        Note over Controller: Add each line to inputs list
+    end
+    
+    Note over Controller: Deduplicate all inputs (case-insensitive)
+    
+    loop For each unique competence
+        Controller->>MapOne: MapOneAsync(input, ct)
+        Note over MapOne: Executes same matching flow as /map endpoint
+        Note over MapOne: Expand abbreviations
+        Note over MapOne: Normalize text
+        Note over MapOne: Match against Areas, Categories, Subcategories
+        Note over MapOne: Save mapping if new
+        MapOne-->>Controller: MapResponse
+    end
+    
+    Controller-->>Client: 200 OK with array of MapResponse objects
