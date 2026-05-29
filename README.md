@@ -32,8 +32,6 @@ Backend path: `Mapping-LIA`
 
 ### Configuration
 
-`Mapping-LIA/appsettings.json` is intentionally not included in this public repository because it contains environment-specific configuration and secrets. Create it locally or configure the equivalent values through environment variables, user secrets, or Azure App Settings.
-
 Required settings:
 
 - `ConnectionStrings:DefaultConnection`: SQL Server or LocalDB connection string.
